@@ -1,3 +1,6 @@
 <resources>
-    <string name="app_name">slope-field-generator</string>
+    <string name="app_name">Slope Field Generator</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
