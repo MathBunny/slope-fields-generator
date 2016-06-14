@@ -16,9 +16,9 @@ public class Graph extends View {
     Paint paint;
 
     int startX = 0;
-    int endX = 500;
+    int endX = 8;
     int startY = 0;
-    int endY = 100;
+    int endY = 8;
     int height; //height
     int width; //width
     int startYGFX; //position to start executing Y in graphics
@@ -76,7 +76,7 @@ public class Graph extends View {
             int iterY = 0;
             for(int y = startYGFX; y >= 0; y-=MIN_PIXELS_PER_SQUARE, iterY++){ //<= width-MIN_
                 int yLoc = (startY + iterY * skip); //this is the Y coordinate
-                drawSegment(xLoc, yLoc, 0.2, x, y, canvas); //drawSegment(0, 0, 2, xLoc, yLoc, canvas);
+                drawSegment(xLoc, yLoc, 0.5, x, y, canvas); //drawSegment(0, 0, 2, xLoc, yLoc, canvas);
                 //canvas.drawText(xLoc+" " + yLoc, x, y, paint);
 
             }
@@ -125,7 +125,7 @@ public class Graph extends View {
     }
 
     private void generateStep(){
-        height = getHeight()/2;
+        height = getHeight(); //divide by 2!
         width = getWidth();
         int stepHorizontal = ((endX-startX+2)*MIN_PIXELS_PER_SQUARE)/width+1; //bug: 0-500
         int stepVertical = ((endY-startY+2)*MIN_PIXELS_PER_SQUARE)/height+1;
