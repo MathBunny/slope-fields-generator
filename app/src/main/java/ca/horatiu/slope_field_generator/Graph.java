@@ -30,7 +30,26 @@ public class Graph extends View {
         paint = new Paint();
     }
 
-    public void drawXAxisText(Canvas canvas){
+    private void drawSegment(int x, int y, int slope, Canvas canvas){
+
+    }
+
+    private void drawSlopes(Canvas canvas){
+        int iterX = 0;
+        for(int x = MIN_PIXELS_PER_SQUARE; x <= width; x+=MIN_PIXELS_PER_SQUARE, iterX++){ //<= width-MIN_
+            int xLoc = (startX + iterX * skip); //start at x, then add accordingly :-)
+            int iterY = 0;
+            for(int y = startYGFX; y >= 0; y-=MIN_PIXELS_PER_SQUARE, iterY++){ //<= width-MIN_
+                int yLoc = (startY + iterY * skip); //this is the Y coordinate
+
+                //canvas.drawText(xLoc+" " + yLoc, x, y, paint);
+
+            }
+        }
+
+    }
+
+    private void drawXAxisText(Canvas canvas){
         final int yBump = 20;//10
         final int xBump = 9;
         paint.setColor(android.graphics.Color.BLACK);
@@ -42,7 +61,7 @@ public class Graph extends View {
         }
     }
 
-    public void drawYAxisText(Canvas canvas){
+    private void drawYAxisText(Canvas canvas){
         final int yBump = 10;
         final int xBump = 9;
         paint.setColor(android.graphics.Color.BLACK);
@@ -55,7 +74,7 @@ public class Graph extends View {
     }
 
     //draws the line
-    public void drawGrid(Canvas canvas){
+    private void drawGrid(Canvas canvas){
         paint.setColor(Color.BLACK);
 
         for(int x = 0; x <= width; x+= MIN_PIXELS_PER_SQUARE){
@@ -70,7 +89,7 @@ public class Graph extends View {
         //Log.d("OK", "OK __ ADDED" +skip);
     }
 
-    public void generateStep(){
+    private void generateStep(){
         height = getHeight()/2;
         width = getWidth();
         int stepHorizontal = ((endX-startX+2)*MIN_PIXELS_PER_SQUARE)/width+1; //bug: 0-500
@@ -82,7 +101,7 @@ public class Graph extends View {
             skip = 1;
     }
 
-    public void generateGraph(Canvas canvas){
+    private void generateGraph(Canvas canvas){
         Bitmap.Config conf = Bitmap.Config.ARGB_8888; // see other conf types
         Bitmap bmp = Bitmap.createBitmap(getWidth(), getHeight(), conf);
 
@@ -105,5 +124,6 @@ public class Graph extends View {
         generateGraph(canvas);
         drawXAxisText(canvas);
         drawYAxisText(canvas);
+        drawSlopes(canvas);
     }
 }
