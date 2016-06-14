@@ -7,36 +7,26 @@ import android.widget.EditText;
 
 
 public class MainActivity extends AppCompatActivity {
-    String yExpression = "";
-    String xExpression = "";
     Graph renderScreen;
-
-    private EditText equation;
-
-
-    public void getStartEnd(){
-        int startX = 0;
-
-    }
+    Query query;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        renderScreen = new Graph(this);
+        generateQuery();
+        renderScreen = new Graph(this, query);
         renderScreen.requestFocus();
         LinearLayout upper = (LinearLayout) findViewById(R.id.LinearLayout01);
         upper.addView(renderScreen);
-
-        //Graph renderScreen = new Graph(this); //this places Graph at the top
-        //setContentView(renderScreen);
-
-        //setContentView(R.layout.activity_main);
     }
 
-    public void evaluateExpression(){
-
-
+    public void generateQuery(){
+        int startX = Integer.parseInt(((EditText)(findViewById(R.id.xStart))).getText().toString());
+        int startY = Integer.parseInt(((EditText)(findViewById(R.id.yStart))).getText().toString());
+        int endX = Integer.parseInt(((EditText)(findViewById(R.id.xEnd))).getText().toString());
+        int endY = Integer.parseInt(((EditText)(findViewById(R.id.yEnd))).getText().toString());
+        String expression = ((EditText)(findViewById(R.id.equation))).getText().toString();
+        query = new Query(startX, endX, startY, endY, expression);
     }
 }

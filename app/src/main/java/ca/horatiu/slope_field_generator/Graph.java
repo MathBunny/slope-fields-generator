@@ -15,6 +15,7 @@ public class Graph extends View {
     static final int MIN_PIXELS_PER_SQUARE = 100;
     static final int TANGENT_THICKNESS = 2;
     Paint paint;
+    Query query;
 
     private int startX = 0;
     private int endX = 8;
@@ -28,9 +29,10 @@ public class Graph extends View {
 
     int skip;
 
-    public Graph(Context context) {
+    public Graph(Context context, Query query) {
         super(context);
         paint = new Paint();
+        this.query = query;
     }
 
     public void setExpression(){
@@ -153,7 +155,7 @@ public class Graph extends View {
         width = getWidth();
         int stepHorizontal = ((endX-startX+2)*MIN_PIXELS_PER_SQUARE)/width+1; //bug: 0-500
         int stepVertical = ((endY-startY+2)*MIN_PIXELS_PER_SQUARE)/height+1;
-        Log.d("skipGap", "Gap: " + stepHorizontal + " " + stepVertical);
+        //Log.d("skipGap", "Gap: " + stepHorizontal + " " + stepVertical);
 
         skip = Math.max(stepHorizontal, stepVertical); //okay done. fix this in the future by centering.
         if (skip == 0)
@@ -176,10 +178,17 @@ public class Graph extends View {
         drawGrid(canvas);
     }
 
+    private void updateFields(){
+        startX = query.getStartX();
+        startY = query.getStartY();
+        endX = query.getEndX();
+        endY = query.getEndY();
+    }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        updateFields();
         generateStep();
         generateGraph(canvas);
         drawXAxisText(canvas);
