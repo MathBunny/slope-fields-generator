@@ -25,8 +25,6 @@ public class Graph extends View {
     private int width; //width
     private int startYGFX; //position to start executing Y in graphics
     private String expression = "";
-
-
     int skip;
 
     public Graph(Context context, Query query) {
@@ -35,18 +33,14 @@ public class Graph extends View {
         this.query = query;
     }
 
-    public void setExpression(){
-
-    }
-
     private void drawSegment(int x, int y, double slope, int xCanvas, int yCanvas, Canvas canvas){
         //MIN_PIXELS_PER_SQUARE ...
         double maxLength = MIN_PIXELS_PER_SQUARE/2;
         int val = (int)(Math.atan(slope)*(180/Math.PI));
         int angle = Math.abs(val);
 
-        int xLen = (int)(Math.cos(angle * Math.PI/180.0)*maxLength);
-        int yLen = (int)(Math.sin(angle * Math.PI/180.0)*maxLength);
+        int xLen = (int)(Math.cos(angle * Math.PI/180.0)* maxLength);
+        int yLen = (int)(Math.sin(angle * Math.PI/180.0)* maxLength);
         Log.d("Angles",  xLen + " " + yLen + " " + angle);
         Log.d("Length",  maxLength + "");
 
@@ -101,13 +95,13 @@ public class Graph extends View {
             for(int y = startYGFX; y >= 0; y-=MIN_PIXELS_PER_SQUARE, iterY++){ //<= width-MIN_
                 int yLoc = (startY + iterY * skip); //this is the Y coordinate
 
-                double [] arr = {-2.5, -2, -0.6, 0.2, 1, 2.2};
-                drawSegment(xLoc, yLoc, arr[(int)(Math.random()*6)], x, y, canvas); //drawSegment(0, 0, 2, xLoc, yLoc, canvas);
+                //double [] arr = {-2.5, -2, -0.6, 0.2, 1, 2.2};
+                //drawSegment(xLoc, yLoc, arr[(int)(Math.random()*6)], x, y, canvas); //drawSegment(0, 0, 2, xLoc, yLoc, canvas);
                 //canvas.drawText(xLoc+" " + yLoc, x, y, paint);
-
+                drawSegment(xLoc, yLoc, Evaluate.evaluateGeneralDifferential(expression, xLoc, yLoc), x, y, canvas);
+                //evaluateGeneralDifferential
             }
         }
-
     }
 
     private void drawXAxisText(Canvas canvas){
@@ -183,6 +177,7 @@ public class Graph extends View {
         startY = query.getStartY();
         endX = query.getEndX();
         endY = query.getEndY();
+        expression = query.getExpression();
     }
 
     @Override
