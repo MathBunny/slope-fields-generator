@@ -13,6 +13,7 @@ import android.view.View;
  */
 public class Graph extends View {
     static final int MIN_PIXELS_PER_SQUARE = 100;
+    static final int TANGENT_THICKNESS = 2;
     Paint paint;
 
     int startX = 0;
@@ -63,7 +64,22 @@ public class Graph extends View {
             yStart = yCanvas;
             yEnd = yCanvas;
         }
-        canvas.drawLine(xStart, yStart, xEnd, yEnd, paint); //#HOPE!
+        if (slope > 2)
+         paint.setColor(Color.BLACK);
+        else if (slope < 2 && slope >= 1)
+            paint.setColor(Color.BLUE);
+        else if (slope > 0){
+            paint.setColor(Color.CYAN);
+        }
+        else if (slope < 0 && slope >= -1){
+            paint.setColor(Color.MAGENTA);
+        }
+        else{
+            paint.setColor(Color.RED);
+        }
+
+        for(int z = 0; z < TANGENT_THICKNESS; z++)
+            canvas.drawLine(xStart+z, yStart+z, xEnd+z, yEnd+z, paint); //#HOPE!
 
         //you can go along the diagonal.. halfway
 
@@ -76,7 +92,9 @@ public class Graph extends View {
             int iterY = 0;
             for(int y = startYGFX; y >= 0; y-=MIN_PIXELS_PER_SQUARE, iterY++){ //<= width-MIN_
                 int yLoc = (startY + iterY * skip); //this is the Y coordinate
-                drawSegment(xLoc, yLoc, 0.5, x, y, canvas); //drawSegment(0, 0, 2, xLoc, yLoc, canvas);
+
+                double [] arr = {-2.5, -2, -0.6, 0.2, 1, 2.2};
+                drawSegment(xLoc, yLoc, arr[(int)(Math.random()*6)], x, y, canvas); //drawSegment(0, 0, 2, xLoc, yLoc, canvas);
                 //canvas.drawText(xLoc+" " + yLoc, x, y, paint);
 
             }

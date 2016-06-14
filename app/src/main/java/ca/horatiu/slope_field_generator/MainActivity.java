@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.widget.LinearLayout;
 
 public class MainActivity extends AppCompatActivity {
+    String yExpression = "";
+    String xExpression = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
