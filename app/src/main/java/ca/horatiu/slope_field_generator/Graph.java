@@ -16,19 +16,25 @@ public class Graph extends View {
     static final int TANGENT_THICKNESS = 2;
     Paint paint;
 
-    int startX = 0;
-    int endX = 8;
-    int startY = 0;
-    int endY = 8;
-    int height; //height
-    int width; //width
-    int startYGFX; //position to start executing Y in graphics
+    private int startX = 0;
+    private int endX = 8;
+    private int startY = 0;
+    private int endY = 8;
+    private int height; //height
+    private int width; //width
+    private int startYGFX; //position to start executing Y in graphics
+    private String expression = "";
+
 
     int skip;
 
     public Graph(Context context) {
         super(context);
         paint = new Paint();
+    }
+
+    public void setExpression(){
+
     }
 
     private void drawSegment(int x, int y, double slope, int xCanvas, int yCanvas, Canvas canvas){
@@ -169,6 +175,7 @@ public class Graph extends View {
         //canvas.drawBitmap(bmp, new Matrix(), null);
         drawGrid(canvas);
     }
+
 
     @Override
     protected void onDraw(Canvas canvas) {

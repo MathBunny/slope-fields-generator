@@ -7,16 +7,48 @@ import net.objecthunter.exp4j.ExpressionBuilder;
  */
 public class Evaluate {
 
-    public static void evaluate(){
-        Expression e = new ExpressionBuilder("3 * sin(y) - 2 / (x - 2)")
-                .variables("x", "y")
-                .build()
-                .setVariable("x", 2.3)
-                .setVariable("y", 3.14);
-        double result = e.evaluate();
+    public static double evaluateGeneralDifferential(String expression, double xValue, double yValue){
+        try {
+            Expression e = new ExpressionBuilder(expression)
+                    .variables("x", "y")
+                    .build()
+                    .setVariable("x", xValue)
+                    .setVariable("y", yValue);
+            return e.evaluate();
+        }
+        catch(Exception e){
+            /*AlertDialog ad = new AlertDialog.Builder(this).create();
+            ad.setCancelable(false); // This blocks the 'BACK' button
+            ad.setMessage("Hello World");
+            ad.setButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            ad.show()*/
+        }
+        return -Double.MAX_VALUE;
     }
 
-    public Evaluate(){
+    public static double evaluateFractionalSeperableDifferenial(String top, String bottom, double xValue, double yValue){
+        try {
+            Expression e = new ExpressionBuilder(top)
+                    .variables("y")
+                    .build()
+                    .setVariable("y", yValue);
+            Expression ee = new ExpressionBuilder(bottom)
+                    .variables("x")
+                    .build()
+                    .setVariable("x", xValue);
 
+            return e.evaluate() / ee.evaluate();
+        }
+        catch(Exception e){
+            //error
+        }
+        return -Double.MAX_VALUE;
     }
+
+    public Evaluate(){}
 }
