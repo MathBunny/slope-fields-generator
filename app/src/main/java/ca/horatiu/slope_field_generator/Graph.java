@@ -30,7 +30,42 @@ public class Graph extends View {
         paint = new Paint();
     }
 
-    private void drawSegment(int x, int y, int slope, Canvas canvas){
+    private void drawSegment(int x, int y, double slope, int xCanvas, int yCanvas, Canvas canvas){
+        //MIN_PIXELS_PER_SQUARE ...
+        double maxLength = MIN_PIXELS_PER_SQUARE/2;
+        int val = (int)(Math.atan(slope)*(180/Math.PI));
+        int angle = Math.abs(val);
+
+        int xLen = (int)(Math.cos(angle * Math.PI/180.0)*maxLength);
+        int yLen = (int)(Math.sin(angle * Math.PI/180.0)*maxLength);
+        Log.d("Angles",  xLen + " " + yLen + " " + angle);
+        Log.d("Length",  maxLength + "");
+
+        int xStart;
+        int xEnd;
+        int yStart;
+        int yEnd;
+
+        xStart = xCanvas-xLen;
+        xEnd = xCanvas+xLen;
+
+        if (val < 0){
+            yStart = yCanvas-yLen;
+            yEnd = yCanvas+yLen;
+        }
+        else if (val > 0){
+            yStart = yCanvas+yLen;
+            yEnd = yCanvas-yLen;
+        }
+        else{ //flat line!
+            xStart = xCanvas-(int)maxLength;
+            xEnd = xCanvas+(int)maxLength;
+            yStart = yCanvas;
+            yEnd = yCanvas;
+        }
+        canvas.drawLine(xStart, yStart, xEnd, yEnd, paint); //#HOPE!
+
+        //you can go along the diagonal.. halfway
 
     }
 
@@ -41,7 +76,7 @@ public class Graph extends View {
             int iterY = 0;
             for(int y = startYGFX; y >= 0; y-=MIN_PIXELS_PER_SQUARE, iterY++){ //<= width-MIN_
                 int yLoc = (startY + iterY * skip); //this is the Y coordinate
-
+                drawSegment(xLoc, yLoc, 0.2, x, y, canvas); //drawSegment(0, 0, 2, xLoc, yLoc, canvas);
                 //canvas.drawText(xLoc+" " + yLoc, x, y, paint);
 
             }
