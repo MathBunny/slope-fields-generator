@@ -1,13 +1,15 @@
 package ca.horatiu.slope_field_generator;
+import android.support.v4.view.GestureDetectorCompat;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.ScaleGestureDetector.SimpleOnScaleGestureListener;
 
 /**
  * Created by Horatiu on 14/06/2016.
  */
-public class MyOnScaleGestureListener extends
-        SimpleOnScaleGestureListener {
+public class MyOnScaleGestureListener extends SimpleOnScaleGestureListener{
 
     MainActivity main;
 
@@ -17,20 +19,15 @@ public class MyOnScaleGestureListener extends
 
     @Override
     public boolean onScale(ScaleGestureDetector detector) {
-
         float scaleFactor = detector.getScaleFactor();
-
         if (scaleFactor < 1) {
-            //Log.d("Zoom", "Zooming out!"); //decrease?
             if (Graph.MIN_PIXELS_PER_SQUARE > 20)
                 Graph.MIN_PIXELS_PER_SQUARE-=3;
+
             main.refresh();
-            //scaleText.setText("Zooming Out");
         } else {
-            //Log.d("Zoom", "Zooming in!");
             Graph.MIN_PIXELS_PER_SQUARE += 3;
             main.refresh();
-            //scaleText.setText("Zooming In");
         }
         return true;
     }
@@ -41,7 +38,5 @@ public class MyOnScaleGestureListener extends
     }
 
     @Override
-    public void onScaleEnd(ScaleGestureDetector detector) {
-
-    }
+    public void onScaleEnd(ScaleGestureDetector detector) {}
 }
