@@ -14,6 +14,7 @@ import android.view.View;
 public class Graph extends View {
     static int MIN_PIXELS_PER_SQUARE = 100; //100
     static final int TANGENT_THICKNESS = 3; //2
+    static final int GRID_THICKNESS = 1; //2
     Paint paint;
     Query query;
 
@@ -82,6 +83,10 @@ public class Graph extends View {
 
         for(int z = 0; z < TANGENT_THICKNESS; z++)
             canvas.drawLine(xStart+z, yStart, xEnd+z, yEnd, paint); //#HOPE!
+        /*if (Math.abs(slope) < 0.1){
+            for(int z = 0; z < TANGENT_THICKNESS; z++)
+                canvas.drawLine(xStart, yStart+z, xEnd, yEnd+z, paint); //#HOPE!
+        }*/
 
     }
 
@@ -134,7 +139,7 @@ public class Graph extends View {
             canvas.drawLine(x, 0,  x,  height, paint);
         }
         for(int y = 0; y <= height; y+= MIN_PIXELS_PER_SQUARE){
-            for(int z = 0; z < 4; z++)
+            for(int z = 0; z < GRID_THICKNESS; z++)
                 canvas.drawLine(0, y+z, width, y+z+1, paint);
             startYGFX = y;
         }
