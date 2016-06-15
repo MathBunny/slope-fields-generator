@@ -8,8 +8,7 @@ This Android app generates a slope field for a differential equation (first-orde
 * Parses any expression including trignometric functions and constants with exp4j (Dijkstra Shunting-Yard Algorithm)
 * Adjustable graph scale, automatically scales properly to fit all information
 * Easy to use interface, color coded changing RGB tangent colors adapt dynamically
-* Allows for pinch to zoom in/out and panning
-* Double-tap returns to origin
+* Allows multi-touch gestures, such as: pinch to zoom in/out and panning, double-tap to origin
 * Fast performance, OOP design
 * Error-trapped interface
 
