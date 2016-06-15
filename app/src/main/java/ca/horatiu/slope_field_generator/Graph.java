@@ -34,6 +34,19 @@ public class Graph extends View {
         this.query = query;
     }
 
+    private int getRed(String color){
+        return Integer.parseInt(color.substring(1, 3), 16);
+    }
+
+    private int getGreen(String color){
+        return Integer.parseInt(color.substring(3, 5), 16);
+    }
+
+    private int getBlue(String color){
+        return Integer.parseInt(color.substring(5, 7), 16);
+    }
+
+
     private void drawSegment(int x, int y, double slope, int xCanvas, int yCanvas, Canvas canvas){
         //MIN_PIXELS_PER_SQUARE ...
         double maxLength = MIN_PIXELS_PER_SQUARE/2;
@@ -67,7 +80,75 @@ public class Graph extends View {
             yStart = yCanvas;
             yEnd = yCanvas;
         }
-        if (slope > 2)
+
+        String [] blue = {"#CCE5FF", "#99CCFF", "#66B2FF", "#3399FF", "#0080FF", "#0066CC", "#004C99", "#003366", "#001933"};//ascending
+        String white = "#000000"; //black?
+        String [] orange = {"#FFE5CC", "#FFCC99", "#FFB266", "#FF9933", "#FF8000", "#CC6600", "#994C00", "#663300", "#331900"};
+        String [] purple = {"#FFCCE5", "#FF99CC", "#FF66B2", "#FF3399", "#FF007F", "#CC0066", "#99004C", "#660033", "#330019"};
+
+        String colorChosen = white;
+
+        if (slope > 50){
+            colorChosen = blue[8];
+        }
+        else if (slope > 10){
+            colorChosen = blue[7];
+        }
+        else if (slope > 5){
+            colorChosen = blue[6];
+        }
+        else if (slope > 2){
+            colorChosen = blue[5];
+        }
+        else if (slope >= 1){
+            colorChosen = blue[4];
+        }
+        else if (slope >= 0.8){
+            colorChosen = blue[3];
+        }
+        else if (slope >= 0.5) {
+            colorChosen = blue[2];
+        }
+        else if (slope > 0.25) {
+            colorChosen = blue[1];
+        }
+        else if (slope > 0.1){
+            colorChosen = blue[0];
+        }
+        else if (Math.abs(slope) <= 0.1){ //white
+            colorChosen = white;
+        }
+        else if (slope > -0.25){
+            colorChosen = purple[0];
+        }
+        else if (slope > -0.5){
+            colorChosen = purple[1];
+        }
+        else if (slope > -0.8){
+            colorChosen = purple[2];
+        }
+        else if (slope >= -1){
+            colorChosen = purple[3];
+        }
+        else if (slope >= -2){
+            colorChosen = purple[4];
+        }
+        else if (slope >= -5){
+            colorChosen = purple[5];
+        }
+        else if (slope >= -10) {
+            colorChosen = purple[6];
+        }
+        else if (slope > -50) {
+            colorChosen = purple[7];
+        }
+        else{
+            colorChosen = purple[8];
+        }
+        paint.setColor(Color.rgb(getRed(colorChosen), getGreen(colorChosen), getBlue(colorChosen)));
+
+
+        /*if (slope > 2)
          paint.setColor(Color.BLACK);
         else if (slope < 2 && slope >= 1)
             paint.setColor(Color.BLUE);
@@ -79,7 +160,8 @@ public class Graph extends View {
         }
         else{
             paint.setColor(Color.RED);
-        }
+        }*/
+
 
         for(int z = 0; z < TANGENT_THICKNESS; z++)
             canvas.drawLine(xStart+z, yStart, xEnd+z, yEnd, paint); //#HOPE!

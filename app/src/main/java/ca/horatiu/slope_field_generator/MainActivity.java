@@ -141,6 +141,12 @@ public class MainActivity extends ActionBarActivity implements GestureDetector.O
     @Override
     public boolean onDoubleTap(MotionEvent event) {
         Log.d("Sensor", "onDoubleTap: " + event.toString());
+        ((EditText) findViewById(R.id.yStart)).setText("-10", TextView.BufferType.EDITABLE);
+        ((EditText) findViewById(R.id.yEnd)).setText("10", TextView.BufferType.EDITABLE);
+        ((EditText) findViewById(R.id.xStart)).setText("-10");
+        ((EditText) findViewById(R.id.xEnd)).setText("10");
+        Graph.MIN_PIXELS_PER_SQUARE = 100;
+        refresh(false);
         return true;
     }
 
