@@ -1,6 +1,9 @@
 package ca.horatiu.slope_field_generator;
+import android.content.DialogInterface;
+
 import net.objecthunter.exp4j.Expression;
 import net.objecthunter.exp4j.ExpressionBuilder;
+import net.objecthunter.exp4j.ValidationResult;
 
 /**
  * Created by Horatiu on 13/06/2016.
@@ -17,18 +20,22 @@ public class Evaluate {
             return e.evaluate();
         }
         catch(Exception e){
-            /*AlertDialog ad = new AlertDialog.Builder(this).create();
-            ad.setCancelable(false); // This blocks the 'BACK' button
-            ad.setMessage("Hello World");
-            ad.setButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            ad.show()*/
         }
         return -Double.MAX_VALUE;
+    }
+
+    public static boolean validateExpression(String expression){
+        try {
+            Expression e = new ExpressionBuilder(expression)
+                    .variables("x", "y")
+                    .build();
+
+            ValidationResult res = e.validate(false);
+            return res.isValid();
+        }
+        catch(Exception e){
+            return false;
+        }
     }
 
     public static double evaluateFractionalSeperableDifferenial(String top, String bottom, double xValue, double yValue){

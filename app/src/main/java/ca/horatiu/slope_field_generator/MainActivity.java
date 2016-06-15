@@ -12,11 +12,12 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.app.AlertDialog;
+import android.content.*;
 
 
-public class MainActivity extends ActionBarActivity implements
-        GestureDetector.OnGestureListener,
-        GestureDetector.OnDoubleTapListener {
+
+public class MainActivity extends ActionBarActivity implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
     Graph renderScreen;
     Query query;
     ScaleGestureDetector scaleGestureDetector;
@@ -26,7 +27,7 @@ public class MainActivity extends ActionBarActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        generateQuery();
+        generateQuery(true);
         renderScreen = new Graph(this, query);
         renderScreen.requestFocus();
         LinearLayout upper = (LinearLayout) findViewById(R.id.LinearLayout01);
@@ -44,21 +45,39 @@ public class MainActivity extends ActionBarActivity implements
         return true;
     }
 
-    public void generateQuery(){
+    public void generateQuery(boolean shouldChangeExpression){
         int startX = Math.min(Integer.parseInt(((EditText)(findViewById(R.id.xStart))).getText().toString()), Integer.parseInt(((EditText)(findViewById(R.id.xEnd))).getText().toString()));
         int startY = Math.min(Integer.parseInt(((EditText)(findViewById(R.id.yStart))).getText().toString()), Integer.parseInt(((EditText)(findViewById(R.id.yEnd))).getText().toString()));
         int endX = Math.max(Integer.parseInt(((EditText)(findViewById(R.id.xStart))).getText().toString()), Integer.parseInt(((EditText)(findViewById(R.id.xEnd))).getText().toString()));
         int endY = Math.max(Integer.parseInt(((EditText)(findViewById(R.id.yStart))).getText().toString()), Integer.parseInt(((EditText)(findViewById(R.id.yEnd))).getText().toString()));
-        String expression = ((EditText)(findViewById(R.id.equation))).getText().toString();
-        query = new Query(startX, endX, startY, endY, expression);
+        if (shouldChangeExpression) {
+            String expression = ((EditText) (findViewById(R.id.equation))).getText().toString();
+            if (!Evaluate.validateExpression(expression)) {
+                //error!
+                AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+                alertDialog.setTitle("Error! Invalid Expression");
+                alertDialog.setMessage("Please fix your expression to only use x and y variables");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
+                return;
+            }
+            query = new Query(startX, endX, startY, endY, expression);
+            return;
+        }
+        query = new Query(startX, endX, startY, endY, query.getExpression());
     }
 
     public void compute(View view){
-        refresh();
+        refresh(true);
     }
 
-    public void refresh(){
-        generateQuery();
+    public void refresh(boolean shouldChangeExpression){
+        generateQuery(shouldChangeExpression);
         renderScreen = new Graph(this, query);
         renderScreen.requestFocus();
         LinearLayout upper = (LinearLayout) findViewById(R.id.LinearLayout01);
@@ -74,8 +93,7 @@ public class MainActivity extends ActionBarActivity implements
     }
 
     @Override
-    public boolean onFling(MotionEvent event1, MotionEvent event2,
-                           float velocityX, float velocityY) {
+    public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY) {
         Log.d("Sensor", "onFling: " + event1.toString()+event2.toString());
         return true;
     }
@@ -105,7 +123,7 @@ public class MainActivity extends ActionBarActivity implements
             ((EditText) findViewById(R.id.yStart)).setText(query.getStartY()-renderScreen.skip+"", TextView.BufferType.EDITABLE);
             ((EditText) findViewById(R.id.yEnd)).setText(query.getEndY()-renderScreen.skip+"", TextView.BufferType.EDITABLE);
         }
-        refresh();
+        refresh(false);
         return true;
     }
 

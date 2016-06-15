@@ -24,10 +24,10 @@ public class MyOnScaleGestureListener extends SimpleOnScaleGestureListener{
             if (Graph.MIN_PIXELS_PER_SQUARE > 20)
                 Graph.MIN_PIXELS_PER_SQUARE-=3;
 
-            main.refresh();
+            main.refresh(false);
         } else {
             Graph.MIN_PIXELS_PER_SQUARE += 3;
-            main.refresh();
+            main.refresh(false);
         }
         return true;
     }
