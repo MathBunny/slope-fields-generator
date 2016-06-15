@@ -12,8 +12,8 @@ import android.view.View;
  * Created by Horatiu on 13/06/2016.
  */
 public class Graph extends View {
-    static final int MIN_PIXELS_PER_SQUARE = 100;
-    static final int TANGENT_THICKNESS = 2;
+    static int MIN_PIXELS_PER_SQUARE = 100; //100
+    static final int TANGENT_THICKNESS = 3; //2
     Paint paint;
     Query query;
 
@@ -41,8 +41,8 @@ public class Graph extends View {
 
         int xLen = (int)(Math.cos(angle * Math.PI/180.0)* maxLength);
         int yLen = (int)(Math.sin(angle * Math.PI/180.0)* maxLength);
-        Log.d("Angles",  xLen + " " + yLen + " " + angle);
-        Log.d("Length",  maxLength + "");
+        //Log.d("Angles",  xLen + " " + yLen + " " + angle);
+       // Log.d("Length",  maxLength + "");
 
         int xStart;
         int xEnd;
@@ -81,9 +81,7 @@ public class Graph extends View {
         }
 
         for(int z = 0; z < TANGENT_THICKNESS; z++)
-            canvas.drawLine(xStart+z, yStart+z, xEnd+z, yEnd+z, paint); //#HOPE!
-
-        //you can go along the diagonal.. halfway
+            canvas.drawLine(xStart+z, yStart, xEnd+z, yEnd, paint); //#HOPE!
 
     }
 
@@ -186,8 +184,10 @@ public class Graph extends View {
         updateFields();
         generateStep();
         generateGraph(canvas);
-        drawXAxisText(canvas);
-        drawYAxisText(canvas);
+        if (MIN_PIXELS_PER_SQUARE >= 40) {
+            drawXAxisText(canvas);
+            drawYAxisText(canvas);
+        }
         drawSlopes(canvas);
     }
 }
