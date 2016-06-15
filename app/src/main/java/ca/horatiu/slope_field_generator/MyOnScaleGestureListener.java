@@ -21,7 +21,7 @@ public class MyOnScaleGestureListener extends SimpleOnScaleGestureListener{
     public boolean onScale(ScaleGestureDetector detector) {
         float scaleFactor = detector.getScaleFactor();
         if (scaleFactor < 1) {
-            if (Graph.MIN_PIXELS_PER_SQUARE > 20)
+            if (Graph.MIN_PIXELS_PER_SQUARE > 10)
                 Graph.MIN_PIXELS_PER_SQUARE-=3;
 
             main.refresh(false);

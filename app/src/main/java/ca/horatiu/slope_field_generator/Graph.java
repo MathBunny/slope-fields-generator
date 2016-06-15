@@ -55,8 +55,6 @@ public class Graph extends View {
 
         int xLen = (int)(Math.cos(angle * Math.PI/180.0)* maxLength);
         int yLen = (int)(Math.sin(angle * Math.PI/180.0)* maxLength);
-        //Log.d("Angles",  xLen + " " + yLen + " " + angle);
-       // Log.d("Length",  maxLength + "");
 
         int xStart;
         int xEnd;
@@ -271,7 +269,7 @@ public class Graph extends View {
         updateFields();
         generateStep();
         generateGraph(canvas);
-        if (MIN_PIXELS_PER_SQUARE >= 40) {
+        if (MIN_PIXELS_PER_SQUARE >= 50) {
             drawXAxisText(canvas);
             drawYAxisText(canvas);
         }

@@ -15,8 +15,6 @@ import android.widget.TextView;
 import android.app.AlertDialog;
 import android.content.*;
 
-
-
 public class MainActivity extends ActionBarActivity implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
     Graph renderScreen;
     Query query;
