@@ -2,7 +2,7 @@
 
 
 ##Purpose
-This Android app generates a slope field for a differential equation (first-order). This app is intended for university students studying Calculus II or differentials.
+This Android app generates a slope field for a differential equation (first-order). This app is intended for university students studying Calculus II or taking differential courses.
 
 ##Features
 * Parses any expression including trignometric functions and constants with exp4j (Dijkstra Shunting-Yard Algorithm)
