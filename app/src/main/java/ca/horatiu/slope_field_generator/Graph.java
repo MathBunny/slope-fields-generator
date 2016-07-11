@@ -9,44 +9,82 @@ import android.util.Log;
 import android.view.View;
 
 /**
- * Created by Horatiu on 13/06/2016.
+ * This class renders the graph.
+ * @author Horatiu Lazu
  */
 public class Graph extends View {
+    /** MIN_PIXELS_PER_SQUARE int This is the minimum number of pixels per square. */
     static int MIN_PIXELS_PER_SQUARE = 100; //100
+    /** TANGENT_THICKNESS int This is the thickness of the tangent. */
     static final int TANGENT_THICKNESS = 3; //2
+    /** GRID_THICKNESS int This is the thickness of the grid. */
     static final int GRID_THICKNESS = 1; //2
+    /** paint Paint This is the paint reference variable. */
     Paint paint;
+    /** query Query This is a query reference variable, used for the queries */
     Query query;
-
+    /** startX int This is the starting x value on the graph. */
     private int startX = 0;
+    /** endX int This is the ending x value on the graph. */
     private int endX = 8;
+    /** startY int This is the starting y value on the graph. */
     private int startY = 0;
+    /** endY int This is the ending y value on the graph. */
     private int endY = 8;
+    /** height int This is the height of the graph. */
     private int height; //height
+    /** width int This is the width of the graph. */
     private int width; //width
+    /** startYGFX int This is the starting y in terms of graphics execution. */
     private int startYGFX; //position to start executing Y in graphics
+    /** expression String This is the expression being evaluted. */
     private String expression = "";
+    /** skip int This is the skip value (used for zooming). */
     int skip;
 
+    /** This is a class constructor for the Graph class.
+     * @param context Context This is the context reference.
+     * @param query Query This is the query reference variable, storing the information for the query.
+     */
     public Graph(Context context, Query query) {
         super(context);
         paint = new Paint();
         this.query = query;
     }
 
+    /** This method returns the red in RGB.
+     * @param color String This is the color.
+     * @return int This is the red value (0, 255)
+     */
     private int getRed(String color){
         return Integer.parseInt(color.substring(1, 3), 16);
     }
 
+    /** This method returns the green value in RGB.
+     * @param color String This is the color.
+     * @return int This is the green value.
+     */
     private int getGreen(String color){
         return Integer.parseInt(color.substring(3, 5), 16);
     }
 
+    /** This method returns the blue value in RGB.
+     * @param color String This is the color.
+     * @return int This is the blue value.
+     */
     private int getBlue(String color){
         return Integer.parseInt(color.substring(5, 7), 16);
     }
 
-
+    /**
+     * This method draws a line segment.
+     * @param x int This is the x value of the segment.
+     * @param y int This is the y value of the segment.
+     * @param slope double This is the slope.
+     * @param xCanvas int This is the x value on the canvas.
+     * @param yCanvas int This is the y value on the canvas.
+     * @param canvas Canvas This is the canvas where the line will be drawn.
+     */
     private void drawSegment(int x, int y, double slope, int xCanvas, int yCanvas, Canvas canvas){
         //MIN_PIXELS_PER_SQUARE ...
         double maxLength = MIN_PIXELS_PER_SQUARE/2;
@@ -84,9 +122,9 @@ public class Graph extends View {
         String [] orange = {"#FFE5CC", "#FFCC99", "#FFB266", "#FF9933", "#FF8000", "#CC6600", "#994C00", "#663300", "#331900"};
         String [] purple = {"#FFCCE5", "#FF99CC", "#FF66B2", "#FF3399", "#FF007F", "#CC0066", "#99004C", "#660033", "#330019"};
 
-        String colorChosen = white;
+        String colorChosen;
 
-        if (slope > 50){
+        if (slope > 50){ //Hurray!!! Look at that ^_^
             colorChosen = blue[8];
         }
         else if (slope > 10){
@@ -145,31 +183,13 @@ public class Graph extends View {
         }
         paint.setColor(Color.rgb(getRed(colorChosen), getGreen(colorChosen), getBlue(colorChosen)));
 
-
-        /*if (slope > 2)
-         paint.setColor(Color.BLACK);
-        else if (slope < 2 && slope >= 1)
-            paint.setColor(Color.BLUE);
-        else if (slope > 0){
-            paint.setColor(Color.CYAN);
-        }
-        else if (slope < 0 && slope >= -1){
-            paint.setColor(Color.MAGENTA);
-        }
-        else{
-            paint.setColor(Color.RED);
-        }*/
-
-
         for(int z = 0; z < TANGENT_THICKNESS; z++)
-            canvas.drawLine(xStart+z, yStart, xEnd+z, yEnd, paint); //#HOPE!
-        /*if (Math.abs(slope) < 0.1){
-            for(int z = 0; z < TANGENT_THICKNESS; z++)
-                canvas.drawLine(xStart, yStart+z, xEnd, yEnd+z, paint); //#HOPE!
-        }*/
-
+            canvas.drawLine(xStart+z, yStart, xEnd+z, yEnd, paint);
     }
 
+    /** This method draws the individual slopes.
+     * @param canvas Canvas This is the canvas reference.
+     */
     private void drawSlopes(Canvas canvas){
         int iterX = 0;
         for(int x = MIN_PIXELS_PER_SQUARE; x <= width; x+=MIN_PIXELS_PER_SQUARE, iterX++){ //<= width-MIN_
@@ -177,41 +197,46 @@ public class Graph extends View {
             int iterY = 0;
             for(int y = startYGFX; y >= 0; y-=MIN_PIXELS_PER_SQUARE, iterY++){ //<= width-MIN_
                 int yLoc = (startY + iterY * skip); //this is the Y coordinate
-
-                //double [] arr = {-2.5, -2, -0.6, 0.2, 1, 2.2};
-                //drawSegment(xLoc, yLoc, arr[(int)(Math.random()*6)], x, y, canvas); //drawSegment(0, 0, 2, xLoc, yLoc, canvas);
-                //canvas.drawText(xLoc+" " + yLoc, x, y, paint);
                 drawSegment(xLoc, yLoc, Evaluate.evaluateGeneralDifferential(expression, xLoc, yLoc), x, y, canvas);
-                //evaluateGeneralDifferential
             }
         }
     }
 
+    /** This method draws the x axis text.
+     * @param canvas Canvas This is the canvas reference variable.
+     */
     private void drawXAxisText(Canvas canvas){
         final int yBump = 20;//10
         final int xBump = 9;
         paint.setColor(android.graphics.Color.BLACK);
         paint.setTextSize(35);
         int iter = 0;
-        for(int x = MIN_PIXELS_PER_SQUARE; x <= width; x+=MIN_PIXELS_PER_SQUARE, iter++){ //<= width-MIN_
-            String output = (startX + iter * skip) + ""; //start at x, then add accordingly :-)
+        for(int x = MIN_PIXELS_PER_SQUARE; x <= width; x+=MIN_PIXELS_PER_SQUARE, iter++){
+            String output = (startX + iter * skip) + "";
             canvas.drawText(output, x-((int)output.length())*xBump, height-yBump, paint);
         }
     }
 
+    /**
+     * This method draws the y axis text.
+     * @param canvas
+     */
     private void drawYAxisText(Canvas canvas){
         final int yBump = 10;
         final int xBump = 9;
         paint.setColor(android.graphics.Color.BLACK);
         paint.setTextSize(35); //start at the end
         int iter = 0;
-        for(int y = startYGFX; y >= 0; y-=MIN_PIXELS_PER_SQUARE, iter++){ //<= width-MIN_
+        for(int y = startYGFX; y >= 0; y-=MIN_PIXELS_PER_SQUARE, iter++){
             String output = (startY + iter * skip) + "";
             canvas.drawText(output, xBump, y-yBump, paint);
         }
     }
 
-    //draws the line
+    /**
+     * This method draws the grid.
+     * @param canvas Canvas This is the canvas reference variable.
+     */
     private void drawGrid(Canvas canvas){
         paint.setColor(Color.BLACK);
 
@@ -223,10 +248,11 @@ public class Graph extends View {
                 canvas.drawLine(0, y+z, width, y+z+1, paint);
             startYGFX = y;
         }
-        //canvas.save();
-        //Log.d("OK", "OK __ ADDED" +skip);
     }
 
+    /**
+     * This method generates the steps for the equation domain/range.
+     */
     private void generateStep(){
         height = getHeight(); //divide by 2!
         width = getWidth();
@@ -239,22 +265,16 @@ public class Graph extends View {
             skip = 1;
     }
 
+    /** This method generates the graph.
+     * @param canvas Canvas This is the canvas reference variable.
+     */
     private void generateGraph(Canvas canvas){
-        Bitmap.Config conf = Bitmap.Config.ARGB_8888; // see other conf types
-        Bitmap bmp = Bitmap.createBitmap(getWidth(), getHeight(), conf);
-
-        /*for(int x = 0; x < getWidth(); x+= 10){
-            for(int y = 0; y < getHeight(); y+= 10){
-                for(int z = 0; z <= 10; z++)
-                    if (x+z < getWidth() && y+z < getHeight())
-                     bmp.setPixel(x+z, y+z, Color.BLACK);
-            }
-        }
-        Log.d("OK", "HERE" + getHeight());*/
-        //canvas.drawBitmap(bmp, new Matrix(), null);
         drawGrid(canvas);
     }
 
+    /** This method updates the fields.
+     *
+     */
     private void updateFields(){
         startX = query.getStartX();
         startY = query.getStartY();
@@ -263,6 +283,10 @@ public class Graph extends View {
         expression = query.getExpression();
     }
 
+    /**
+     * This method draws the graphics, and if the zoom amount is large enough draws x and y axis text.
+     * @param canvas
+     */
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);

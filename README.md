@@ -15,6 +15,9 @@ This Android app generates a slope field for a differential equation (first-orde
 ##How to use
 Simply input your expression into the textbox, and then select the domain and range. You can pinch to zoom in, increasing the amount of tangents rendered. You can also slide your finger across the graph to change the domain/range dynamically.
 
+##Documentation
+Feel free to look at the complete JavaDoc documentation in `/doc/`
+
 ##Screenshot
 ![Screen is not available](/screenshots/landscape-phone.png "Simple Slope Field")
 

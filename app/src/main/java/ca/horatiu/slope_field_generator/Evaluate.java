@@ -6,10 +6,17 @@ import net.objecthunter.exp4j.ExpressionBuilder;
 import net.objecthunter.exp4j.ValidationResult;
 
 /**
+ * This utlility class evaluates expressions.
  * Created by Horatiu on 13/06/2016.
  */
 public class Evaluate {
 
+    /** This method will evaluate the differential.
+     * @param expression String This is the expression.
+     * @param xValue int This is the x value.
+     * @param yValue int This is the y value.
+     * @return double This is the return value (evaluated).
+     */
     public static double evaluateGeneralDifferential(String expression, double xValue, double yValue){
         try {
             Expression e = new ExpressionBuilder(expression)
@@ -24,6 +31,10 @@ public class Evaluate {
         return -Double.MAX_VALUE;
     }
 
+    /** This method will validate the expression.
+     * @param expression String This is the expression.
+     * @return boolean This indicates true/false if the expression is valid.
+     */
     public static boolean validateExpression(String expression){
         try {
             Expression e = new ExpressionBuilder(expression)
@@ -37,25 +48,5 @@ public class Evaluate {
             return false;
         }
     }
-
-    public static double evaluateFractionalSeperableDifferenial(String top, String bottom, double xValue, double yValue){
-        try {
-            Expression e = new ExpressionBuilder(top)
-                    .variables("y")
-                    .build()
-                    .setVariable("y", yValue);
-            Expression ee = new ExpressionBuilder(bottom)
-                    .variables("x")
-                    .build()
-                    .setVariable("x", xValue);
-
-            return e.evaluate() / ee.evaluate();
-        }
-        catch(Exception e){
-            //error
-        }
-        return -Double.MAX_VALUE;
-    }
-
     public Evaluate(){}
 }
