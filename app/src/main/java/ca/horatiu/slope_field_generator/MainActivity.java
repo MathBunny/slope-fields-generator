@@ -105,21 +105,22 @@ public class MainActivity extends ActionBarActivity implements GestureDetector.O
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
                             float distanceY) {
         Log.d("Sensor", "onScroll: " + e1.toString()+e2.toString());
+        final int skipVal = renderScreen.skip / 5;
         if (distanceX < 0) {
-            ((EditText) findViewById(R.id.xStart)).setText(query.getStartX()+renderScreen.skip + "");
-            ((EditText) findViewById(R.id.xEnd)).setText(query.getEndX()+renderScreen.skip + "");
+            ((EditText) findViewById(R.id.xStart)).setText(query.getStartX()+skipVal + "");
+            ((EditText) findViewById(R.id.xEnd)).setText(query.getEndX()+skipVal + "");
         }
         else{
-            ((EditText) findViewById(R.id.xStart)).setText(query.getStartX()-renderScreen.skip +"");
-            ((EditText) findViewById(R.id.xEnd)).setText(query.getEndX()-renderScreen.skip+"", TextView.BufferType.EDITABLE);
+            ((EditText) findViewById(R.id.xStart)).setText(query.getStartX()-skipVal +"");
+            ((EditText) findViewById(R.id.xEnd)).setText(query.getEndX()-skipVal+"", TextView.BufferType.EDITABLE);
         }
         if (distanceY < 0) {
-            ((EditText) findViewById(R.id.yStart)).setText(query.getStartY()+renderScreen.skip+"", TextView.BufferType.EDITABLE);
-            ((EditText) findViewById(R.id.yEnd)).setText(query.getEndY()+renderScreen.skip+"", TextView.BufferType.EDITABLE);
+            ((EditText) findViewById(R.id.yStart)).setText(query.getStartY()+skipVal+"", TextView.BufferType.EDITABLE);
+            ((EditText) findViewById(R.id.yEnd)).setText(query.getEndY()+skipVal+"", TextView.BufferType.EDITABLE);
         }
         else{
-            ((EditText) findViewById(R.id.yStart)).setText(query.getStartY()-renderScreen.skip+"", TextView.BufferType.EDITABLE);
-            ((EditText) findViewById(R.id.yEnd)).setText(query.getEndY()-renderScreen.skip+"", TextView.BufferType.EDITABLE);
+            ((EditText) findViewById(R.id.yStart)).setText(query.getStartY()-skipVal+"", TextView.BufferType.EDITABLE);
+            ((EditText) findViewById(R.id.yEnd)).setText(query.getEndY()-skipVal+"", TextView.BufferType.EDITABLE);
         }
         refresh(false);
         return true;

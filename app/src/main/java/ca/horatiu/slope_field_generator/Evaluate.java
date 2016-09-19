@@ -7,6 +7,7 @@ import net.objecthunter.exp4j.ValidationResult;
 
 /**
  * This utlility class evaluates expressions.
+ * @author Horatiu Lazu
  * Created by Horatiu on 13/06/2016.
  */
 public class Evaluate {
