@@ -7,4 +7,5 @@
     <string name="y_range">y range:</string>
     <string name="xRange">x range:</string>
     <string name="generate">Generate</string>
+    <string name="defaultEquation">(x*sinx)/(y*sinx)</string>
 </resources>

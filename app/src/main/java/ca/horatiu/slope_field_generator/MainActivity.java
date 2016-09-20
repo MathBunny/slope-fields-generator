@@ -2,7 +2,6 @@ package ca.horatiu.slope_field_generator;
 
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -105,7 +104,7 @@ public class MainActivity extends ActionBarActivity implements GestureDetector.O
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
                             float distanceY) {
         Log.d("Sensor", "onScroll: " + e1.toString()+e2.toString());
-        final int skipVal = renderScreen.skip / 5;
+        final int skipVal = renderScreen.skip;
         if (distanceX < 0) {
             ((EditText) findViewById(R.id.xStart)).setText(query.getStartX()+skipVal + "");
             ((EditText) findViewById(R.id.xEnd)).setText(query.getEndX()+skipVal + "");
@@ -114,7 +113,7 @@ public class MainActivity extends ActionBarActivity implements GestureDetector.O
             ((EditText) findViewById(R.id.xStart)).setText(query.getStartX()-skipVal +"");
             ((EditText) findViewById(R.id.xEnd)).setText(query.getEndX()-skipVal+"", TextView.BufferType.EDITABLE);
         }
-        if (distanceY < 0) {
+        if (distanceY > 0) {
             ((EditText) findViewById(R.id.yStart)).setText(query.getStartY()+skipVal+"", TextView.BufferType.EDITABLE);
             ((EditText) findViewById(R.id.yEnd)).setText(query.getEndY()+skipVal+"", TextView.BufferType.EDITABLE);
         }
@@ -123,6 +122,10 @@ public class MainActivity extends ActionBarActivity implements GestureDetector.O
             ((EditText) findViewById(R.id.yEnd)).setText(query.getEndY()-skipVal+"", TextView.BufferType.EDITABLE);
         }
         refresh(false);
+        try{
+            Thread.sleep(100);
+        }
+        catch(InterruptedException e){}
         return true;
     }
 

@@ -181,6 +181,7 @@ public class Graph extends View {
             colorChosen = purple[8];
         }
         paint.setColor(Color.rgb(getRed(colorChosen), getGreen(colorChosen), getBlue(colorChosen)));
+        //paint.setStrokeWidth(10);
 
         for(int z = 0; z < TANGENT_THICKNESS; z++)
             canvas.drawLine(xStart+z, yStart, xEnd+z, yEnd, paint);
