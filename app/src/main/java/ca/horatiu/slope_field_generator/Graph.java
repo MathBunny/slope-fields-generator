@@ -86,7 +86,6 @@ public class Graph extends View {
      * @param canvas Canvas This is the canvas where the line will be drawn.
      */
     private void drawSegment(int x, int y, double slope, int xCanvas, int yCanvas, Canvas canvas){
-        //MIN_PIXELS_PER_SQUARE ...
         double maxLength = MIN_PIXELS_PER_SQUARE/2;
         int val = (int)(Math.atan(slope)*(180/Math.PI));
         int angle = Math.abs(val);
@@ -182,6 +181,7 @@ public class Graph extends View {
             colorChosen = purple[8];
         }
         paint.setColor(Color.rgb(getRed(colorChosen), getGreen(colorChosen), getBlue(colorChosen)));
+        //paint.setStrokeWidth(10);
 
         for(int z = 0; z < TANGENT_THICKNESS; z++)
             canvas.drawLine(xStart+z, yStart, xEnd+z, yEnd, paint);

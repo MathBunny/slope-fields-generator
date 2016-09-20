@@ -124,7 +124,7 @@
                 android:layout_column="1"
                 android:layout_gravity="fill_horizontal"
                 android:layout_columnSpan="3"
-                android:text="(x^2+32)/(y^3+sin(x))"
+                android:text="@string/defaultEquation"
                 android:textAlignment="center" />
 
             <Button
