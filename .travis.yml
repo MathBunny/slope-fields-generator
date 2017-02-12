@@ -1,5 +1,7 @@
 language: android
 sudo: required
+before_install:
+ - chmod +x gradlew
 android:
   components:
     - build-tools-18.1.1
