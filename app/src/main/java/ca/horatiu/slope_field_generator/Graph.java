@@ -1,11 +1,8 @@
 package ca.horatiu.slope_field_generator;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.util.Log;
 import android.view.View;
 
 /**
@@ -227,9 +224,9 @@ public class Graph extends View {
         paint.setColor(android.graphics.Color.BLACK);
         paint.setTextSize(35); //start at the end
         int iter = 0;
-        for(int y = startYGFX; y >= 0; y-=MIN_PIXELS_PER_SQUARE, iter++){
+        for(int y = startYGFX; y >= 0; y-= MIN_PIXELS_PER_SQUARE, iter++){
             String output = (startY + iter * skip) + "";
-            canvas.drawText(output, xBump, y-yBump, paint);
+            canvas.drawText(output, xBump, y - yBump, paint);
         }
     }
 
